@@ -14,7 +14,7 @@ runs:
     - name: Download Arma 3 Tools
       run: |
         Invoke-WebRequest "$env:ARMA3_TOOLS_URL" -OutFile arma3tools.zip
-        Expand-Archive -Path arma3tools.zip -DestinationPath C:\arma3tools
+        Extract-7Zip -Path arma3tools.zip -DestinationPath C:\arma3tools
         Remove-Item arma3tools.zip
       shell: pwsh
       env:
