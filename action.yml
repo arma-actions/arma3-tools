@@ -20,6 +20,11 @@ runs:
       env:
         ARMA3_TOOLS_URL: ${{ inputs.toolsUrl }}
 
+    - name: Configure Arma 3 Tools
+      run: |
+        (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
+      shell: pwsh
+
     - name: Install DirectX
       run: choco install directx
       shell: pwsh
