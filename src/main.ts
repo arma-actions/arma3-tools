@@ -84,7 +84,7 @@ async function main(toolsUrl: string): Promise<void> {
 }
 
 async function run(): Promise<void> {
-  const toolsUrl = process.env.ARMA3_TOOLS_URL || process.argv[2]
+  const toolsUrl = process.env.ARMA3_TOOLS_URL || core.getInput('toolsUrl')
   if (!toolsUrl) {
     throw new Error('ARMA3_TOOLS_URL environment variable is not set')
   }
