@@ -5,26 +5,5 @@ inputs:
     description: URL to hosted ZIP file with Arma 3 Tools
     required: true
 runs:
-  using: composite
-  steps:
-    - name: Setup registry values
-      run: regedit /S "${{ github.action_path }}\arma3tools.reg"
-      shell: pwsh
-
-    - name: Download Arma 3 Tools
-      run: |
-        Invoke-WebRequest "$env:ARMA3_TOOLS_URL" -OutFile arma3tools.zip
-        Expand-7ZipArchive -Path arma3tools.zip -DestinationPath C:\arma3tools
-        Remove-Item arma3tools.zip
-      shell: pwsh
-      env:
-        ARMA3_TOOLS_URL: ${{ inputs.toolsUrl }}
-
-    - name: Configure Arma 3 Tools
-      run: |
-        (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
-      shell: pwsh
-
-    - name: Install DirectX
-      run: choco install directx
-      shell: pwsh
+  using: 'node20'
+  main: 'dist/main/index.js'

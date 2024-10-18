@@ -1,0 +1,43 @@
+{
+    "name": "setup-arma3tools-action",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Install Arma 3 Tools",
+    "main": "lib/main.js",
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier --write \"**/*.ts\"",
+        "format-check": "prettier --check \"**/*.ts\"",
+        "lint": "eslint src/**/*.ts",
+        "package": "ncc build -o dist/main",
+        "all": "npm run build && npm run format && npm run lint && npm run package"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arma-actions/arma3tools.git"
+    },
+    "keywords": [
+        "actions",
+        "node",
+        "setup"
+    ],
+    "author": "BrettMayson",
+    "license": "MIT",
+    "dependencies": {
+        "@actions/core": "^1.10.1",
+        "@terascope/fetch-github-release": "^0.8.7",
+        "unzipper": "^0.10.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.16.12",
+        "@types/unzipper": "^0.10.10",
+        "@typescript-eslint/eslint-plugin": "^8.10.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "@vercel/ncc": "^0.38.0",
+        "eslint": "^8.51.0",
+        "eslint-plugin-github": "^4.10.1",
+        "js-yaml": "^4.1.0",
+        "prettier": "3.0.3",
+        "typescript": "^5.2.2"
+    }
+}
