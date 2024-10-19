@@ -12,7 +12,7 @@ runs:
       env:
         ARMA3_TOOLS_URL: ${{ inputs.toolsUrl }}
       run: |
-        if (!($IsWindows || $IsLinux)) {
+        if (-not ($IsWindows -or $IsLinux)) {
           throw "Unsupported OS"
         }
 
