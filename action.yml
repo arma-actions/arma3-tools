@@ -12,6 +12,10 @@ runs:
       env:
         ARMA3_TOOLS_URL: ${{ inputs.toolsUrl }}
       run: |
+        if (!$IsWindows && !$IsLinux) {
+          throw "Unsupported OS"
+        }
+
         Invoke-WebRequest "$env:ARMA3_TOOLS_URL" -OutFile arma3tools.zip
 
         if ($IsWindows) {
@@ -21,7 +25,7 @@ runs:
 
           (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
           choco install directx
-        } else {
+        } elseif ($IsLinux) {
           Invoke-Expression "unzip arma3tools.zip -d ~/.local/share/arma3tools"
 
           sudo apt-get install -y wine64
