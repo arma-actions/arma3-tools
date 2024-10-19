@@ -7,24 +7,22 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup registry values
-      run: regedit /S "${{ github.action_path }}\arma3tools.reg"
-      shell: pwsh
-
-    - name: Download Arma 3 Tools
-      run: |
-        Invoke-WebRequest "$env:ARMA3_TOOLS_URL" -OutFile arma3tools.zip
-        Expand-7ZipArchive -Path arma3tools.zip -DestinationPath C:\arma3tools
-        Remove-Item arma3tools.zip
+    - name: Install Arma 3 Tools
       shell: pwsh
       env:
         ARMA3_TOOLS_URL: ${{ inputs.toolsUrl }}
-
-    - name: Configure Arma 3 Tools
       run: |
-        (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
-      shell: pwsh
+        Invoke-WebRequest "$env:ARMA3_TOOLS_URL" -OutFile arma3tools.zip
 
-    - name: Install DirectX
-      run: choco install directx
-      shell: pwsh
+        if ($IsWindows) {
+          Expand-7ZipArchive -Path arma3tools.zip -DestinationPath C:\arma3tools
+          
+          regedit /S "${{ github.action_path }}\arma3tools.reg"
+
+          (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
+          choco install directx
+        } else {
+          Expand-7ZipArchive -Path arma3tools.zip -DestinationPath ~/.local/share/arma3tools
+        }
+
+        Remove-Item arma3tools.zip
