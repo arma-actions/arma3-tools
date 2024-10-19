@@ -22,7 +22,7 @@ runs:
           (Get-Content C:\arma3tools\BinMake\binMakeRules.txt) -replace 'O:\\Arma3CommunityTools', 'C:\arma3tools' | Set-Content C:\arma3tools\BinMake\binMakeRules.txt
           choco install directx
         } else {
-          Expand-7ZipArchive -Path arma3tools.zip -DestinationPath ~/.local/share/arma3tools
+          Invoke-Expression "unzip arma3tools.zip -d ~/.local/share/arma3tools"
 
           sudo apt-get install -y wine64
         }
