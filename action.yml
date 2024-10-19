@@ -23,6 +23,8 @@ runs:
           choco install directx
         } else {
           Expand-7ZipArchive -Path arma3tools.zip -DestinationPath ~/.local/share/arma3tools
+
+          sudo apt-get install -y wine64
         }
 
         Remove-Item arma3tools.zip
